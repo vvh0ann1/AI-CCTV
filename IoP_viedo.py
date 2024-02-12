@@ -106,9 +106,7 @@ while cap.isOpened():
                     cv2.rectangle(frame, (railing_box[0], railing_box[1]), (railing_box[2], railing_box[3]), (255, 0, 0), 2)
                     cv2.putText(frame, "Railing", (railing_box[0], railing_box[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
 
-            if max_IoP > 70:
-                cv2.rectangle(frame, (person_box[0], person_box[1]), (person_box[2], person_box[3]), (0, 255, 255), 2)
-                cv2.putText(frame, "Suicide", (person_box[0], person_box[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)    
+            if max_IoP > 70:  
                 img_iop_detected = np.zeros((150, 300, 3), dtype=np.uint8)
                 b, g, r, a = 255, 255, 255, 0
                 fontpath = "fonts/gulim.ttc"
