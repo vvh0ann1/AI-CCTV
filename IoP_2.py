@@ -99,9 +99,8 @@ if results is not None and len(results) >= 0:
                 area_person = (person_box[2] - person_box[0] + 1) * (person_box[3] - person_box[1] + 1)
                 # IoP 계산
                 corrent_IoP = area_intersection / area_person
-                
                 if corrent_IoP > IoP:
-                    IoP = corrent_IoP
+                    IoP = corrent_IoP            
             # 현재 난간 객체가 가장 많이 겹친 경우 저장
             if IoP > max_IoP:
                 max_IoP = IoP
