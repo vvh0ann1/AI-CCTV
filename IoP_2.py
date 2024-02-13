@@ -93,36 +93,19 @@ if results is not None and len(results) >= 0:
             for person_box in person_boxes:
                 intersection = [max(railing_box[0], person_box[0]), max(railing_box[1], person_box[1]),
                                 min(railing_box[2], person_box[2]), min(railing_box[3], person_box[3])]
-
+                
                 area_intersection = max(0, intersection[2] - intersection[0] + 1) * max(0, intersection[3] - intersection[1] + 1)
-
                 # 사람 객체의 전체 면적
                 area_person = (person_box[2] - person_box[0] + 1) * (person_box[3] - person_box[1] + 1)
-
                 # 겹친 비율 계산
-                corrent_IoP = (area_intersection / area_person) * 100
-
+                corrent_IoP = area_intersection / area_person
                 if corrent_IoP > IoP:
                     IoP = corrent_IoP
-
             # 현재 난간 객체가 가장 많이 겹친 경우 저장
             if IoP > max_IoP:
                 max_IoP = IoP
-                best_railing_box = railing_box
-                best_person_box = person_box
-
-                print(f"IoP: {max_IoP}%")
-
-        # 겹친 비율을 OpenCV 창에 표시
-        if best_railing_box is not None:
-            cv2.putText(img_array, f"IoP: {max_IoP}%", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
-
-            # IoP 값이 70 이상인 경우 새로운 OpenCV 창 열기
-            if max_IoP > 70:
-                # Draw an additional bounding box around the person in yellow and label it as "Suicide"
-                cv2.rectangle(img_array, (best_person_box[0], best_person_box[1]), (best_person_box[2], best_person_box[3]), (0, 255, 255), 2)
-                cv2.putText(img_array, "Suicide", (best_person_box[0], best_person_box[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
-
+            # IoP 값이 0.7 이상인 경우 새로운 OpenCV 창 열기
+            if max_IoP > 0.7:
                 img_iop_detected = np.zeros((150, 300, 3), dtype=np.uint8)
                 b, g, r, a = 255, 255, 255, 0
                 fontpath = "fonts/gulim.ttc"
